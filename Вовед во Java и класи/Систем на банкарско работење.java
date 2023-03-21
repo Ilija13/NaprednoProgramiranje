@@ -15,10 +15,6 @@ class Account {
         this.id = random.nextLong();
     }
 
-    public double getDoubleBalance() {
-        return balance;
-    }
-
 
     public long getId() {
         return id;
@@ -32,17 +28,13 @@ class Account {
         return String.valueOf(balance + "$");
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return id == account.id&&Objects.equals(name, account.name) && Objects.equals(balance, account.balance);
+        return id == account.id && Objects.equals(name, account.name) && Objects.equals(balance, account.balance);
     }
 
     @Override
@@ -81,13 +73,6 @@ abstract class Transaction {
         this.amount = Double.parseDouble(amount.replace("$", ""));
     }
 
-    public long getFromId() {
-        return fromId;
-    }
-
-    public long getToId() {
-        return toId;
-    }
 
     private DecimalFormat df = new DecimalFormat("0.00");
 
@@ -103,7 +88,6 @@ abstract class Transaction {
     public String getDescription() {
         return description;
     }
-
 
     public abstract double getProvision();
 
@@ -210,7 +194,7 @@ class Bank {
 
         try {
             from.withdraw(t.getTotalAmount());
-            to.deposit(t.amount);
+            to.deposit(t.getDoubleAmount());
             transfered += t.getDoubleAmount();
             provision += t.getProvision();
             return true;
